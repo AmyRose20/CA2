@@ -2,8 +2,8 @@ package main;
 
 import main.display.Display;
 import main.gfx.Assets;
-import main.gfx.ImageLoader;
-import main.gfx.SpriteSheet;
+// import main.gfx.ImageLoader;
+// import main.gfx.SpriteSheet;
 import main.input.KeyManager;
 import main.states.GameState;
 import main.states.MenuState;
@@ -83,6 +83,7 @@ public class Game implements Runnable
 			State.getState().update();
 		}
 	}
+	
 	private void render()
 	{
 		bs = display.getCanvas().getBufferStrategy();

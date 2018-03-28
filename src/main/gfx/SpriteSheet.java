@@ -18,6 +18,6 @@ public class SpriteSheet
 	   and not the entire sheet */
 	public BufferedImage crop(int x, int y, int width, int height)
 	{
-		return sheet.getSubimage(x, y, width, height);
+		return sheet.getSubimage(x, y, width, height);	
 	}
 }
