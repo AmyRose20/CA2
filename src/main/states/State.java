@@ -3,19 +3,20 @@ package main.states;
 import java.awt.Graphics;
 
 import main.Game;
+import main.Handler;
 
 public abstract class State 
 {
-	protected Game game;
+	protected Handler handler;
 	
 	/* This "State" object instance will hold
 	   what state we currently want to 'update'
 	   and 'render' */
 	private static State currentState = null;
 	
-	public State(Game game)
+	public State(Handler handler)
 	{
-		this.game = game;
+		this.handler = handler;
 	}
 	
 	public static void setState(State state)

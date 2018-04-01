@@ -8,6 +8,7 @@ public class Tile
 	public static Tile[] tiles = new Tile[256];
 	// 0 is the id
 	public static Tile tile1 = new Tile1(0);
+	public static Tile brickTile = new BrickTile(1);
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
 	

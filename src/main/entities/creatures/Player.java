@@ -1,24 +1,35 @@
 package main.entities.creatures;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
-import main.Game;
+import main.Handler;
+import main.gfx.Animation;
 import main.gfx.Assets;
 
 public class Player extends Creature
 {
-	private Game game;
+	
+	private Animation animation;
 
-	public Player(Game game, float x, float y) 
+	public Player(Handler handler, float x, float y) 
 	{
-		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
-		this.game = game;
+		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+	
+		bounds.x = 14;
+		bounds.y = 18;
+		bounds.width = 34;
+		bounds.height = 34;
+		
+		animation = new Animation(70, Assets.player);
 	}
 
 	public void update() 
 	{
+		animation.update();
 		getInput();
 		move();
+		// game.getGameCamera().centerOnEntity(this);
 	}
 	
 	public void getInput()
@@ -26,19 +37,19 @@ public class Player extends Creature
 		xMove = 0;
 		yMove = 0;
 		
-		if(game.getKeyManager().up)
+		if(handler.getKeyManager().up)
 		{
 			yMove = -speed;
 		}
-		if(game.getKeyManager().down)
+		if(handler.getKeyManager().down)
 		{
 			yMove = speed;
 		}
-		if(game.getKeyManager().left)
+		if(handler.getKeyManager().left)
 		{
 			xMove = -speed;
 		}
-		if(game.getKeyManager().right)
+		if(handler.getKeyManager().right)
 		{
 			xMove = speed;
 		}
@@ -48,7 +59,10 @@ public class Player extends Creature
 	{
 		/* Must cascade x and y because 'drawImage' does
 		   not pass floats as parameters */
-		g.drawImage(Assets.player, (int) x, (int) y, width, height, null);
+		g.drawImage(animation.getCurrentFrame(), (int) (x), (int) (y), width, height, null);
+		
+		// g.setColor(Color.red);
+		// g.fillRect((int) (x + bounds.x), (int) (y + bounds.y), bounds.width, bounds.height);
 	}
 
 }

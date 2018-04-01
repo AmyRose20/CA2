@@ -2,6 +2,7 @@ package main;
 
 import main.display.Display;
 import main.gfx.Assets;
+// import main.gfx.GameCamera;
 // import main.gfx.ImageLoader;
 // import main.gfx.SpriteSheet;
 import main.input.KeyManager;
@@ -38,6 +39,9 @@ public class Game implements Runnable
 	
 	private KeyManager keyManager;
 	
+	private Handler handler;
+	
+	// private GameCamera gameCamera;
 	// private BufferedImage test;
 	// private SpriteSheet sheet;
 	
@@ -69,8 +73,11 @@ public class Game implements Runnable
 		// sheet = new SpriteSheet(test);
 		Assets.init();
 		
-		gameState = new GameState(this);
-		menuState = new MenuState(this);
+	    // gameCamera = new GameCamera(this, 0, 0);
+		handler = new Handler(this);
+		
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler);
 		State.setState(gameState);
 	}
 	
@@ -153,6 +160,21 @@ public class Game implements Runnable
 	public KeyManager getKeyManager()
 	{
 		return keyManager;
+	}
+	
+	/* public GameCamera getGameCamera()
+	{
+		return gameCamera;
+	} */
+	
+	public int getWidth()
+	{
+		return width;
+	}
+	
+	public int getHeight()
+	{
+		return height;
 	}
 	
 	public synchronized void start()

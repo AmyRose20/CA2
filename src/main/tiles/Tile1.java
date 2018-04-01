@@ -6,11 +6,11 @@ public class Tile1 extends Tile
 {
 	public Tile1(int id) 
 	{
-		super(Assets.ground, id);
+		super(Assets.grass, id);
 	}
 	
 	public boolean isSolid()
 	{
-		return true;
+		return false;
 	}
 }

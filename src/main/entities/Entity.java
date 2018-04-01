@@ -1,24 +1,33 @@
 package main.entities;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import main.Game;
+import main.Handler;
 
 public abstract class Entity 
 {
 	/* protected is like a private variable, however
 	   classes that extend this class has access to
 	   it */
+	protected Handler handler;
 	protected float x, y;
 	protected int width, height;
+	protected Rectangle bounds;
 	
 	public abstract void update();
 	public abstract void render(Graphics g);
 	
-	public Entity(float x, float y, int width, int height)
+	public Entity(Handler handler, float x, float y, int width, int height)
 	{
+		this.handler = handler;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		
+		bounds = new Rectangle(0 , 0, width, height);
 	}
 	
 	public float getX() 

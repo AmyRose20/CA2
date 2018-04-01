@@ -1,5 +1,4 @@
 package main;
-
 /* Launcher class' function will simply
 be to start up the game
 */
