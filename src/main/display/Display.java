@@ -45,7 +45,9 @@ public class Display
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/* This will ensure that the window stays
 		the width and height it is given by passing in
-		the boolean value false as a parameter */
+		the boolean value false as a parameter. This
+		will indicate that the window cannot be
+		resized */
 		frame.setResizable(false);
 		/* This will ensure that the window appears in
 		   the middle of the screen/monitor */
@@ -71,7 +73,7 @@ public class Display
 		frame.pack();
 	}
 	
-	// Methods
+	// Getters
 	public Canvas getCanvas()
 	{
 		return canvas;

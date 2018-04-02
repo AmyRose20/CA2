@@ -1,21 +1,14 @@
+// This file is stored in the main package of the game
 package main;
 
 import main.display.Display;
 import main.gfx.Assets;
-// import main.gfx.GameCamera;
-// import main.gfx.ImageLoader;
-// import main.gfx.SpriteSheet;
 import main.input.KeyManager;
 import main.states.GameState;
-import main.states.MenuState;
 import main.states.State;
-
+// These are built in classes 
 import java.awt.Graphics;
-
 import java.awt.image.BufferStrategy;
-// import java.awt.image.BufferedImage;
-// import java.awt.Color;
-
 
 /* 'implements Runnable' allows code to run on a thread.
     It must have a run() function included with it within
@@ -23,35 +16,49 @@ import java.awt.image.BufferStrategy;
 public class Game implements Runnable
 {
 	// Data
+	
+	/* Here, variables are declared and object instances 
+	   of various classed are created */
+	
+	/* 'Display' object will be used for displaying
+	 	a window and canvas object to the screen */
 	private Display display;
 	private int width, height;
 	public String title;
 	
+	// Game will run on a 'Thread' object instance
 	private Thread thread;
+	// Initially, the game is not running
 	private boolean running = false;
-	/* A "BufferStrategy" object organizes memory/data on a 
+	/* A 'BufferStrategy' object organizes memory/data on a 
 	   canvas or window before it is actually displayed */
 	private BufferStrategy bs;
+	/* A 'Graphics' object is a super class for allowing
+	   applications to draw onto components */
 	private Graphics g;
 	
+	/* Originally was going to have a 'menuState', hence the parent
+	   class 'State'. 'State' object. The 'State' class will render
+	   and update the game. */
 	private State gameState;
-	private State menuState;
 	
+	/* 'keyManager' class is primarily used to read what keys the 
+	    user has pressed. This class implements 'KeyListener' which
+	    means functions of this class can be used. */
 	private KeyManager keyManager;
 	
+	// Class is used for better organization of game
 	private Handler handler;
-	
-	// private GameCamera gameCamera;
-	// private BufferedImage test;
-	// private SpriteSheet sheet;
 	
 	// Constructor
 	public Game(String title, int width, int height)
 	{
-		/* When a new "Game" object instance is created, 
+		/* When a new 'Game' object instance is created, 
 		   it will then create a new "Display" object instance 
 		   for itself */
 		display = new Display(title, width, height);
+		/* Variables that were passed as parameters are assigned to
+		   variables already within this class, hence the 'this' */
 		this.width = width;
 		this.height = height;
 		this.title = title;
@@ -64,27 +71,30 @@ public class Game implements Runnable
 	   and is only called once */
 	private void init()
 	{
-		/* When a new "Game" object instance is created, 
-		   it will then create a new "Display" object instance 
-		   for itself within this function */
-		display = new Display(title, width, height);
+		/* 'display' object instance will use its function
+		   'getFrame' to return a 'JFrame' object instance. This
+		   'JFrame' object instance is used to display window along
+		   	with having the functions of 'KeyListener' within the window
+		   	and passing 'keyManager' as a parameter for a new 'KeyListener'
+		    object */
 		display.getFrame().addKeyListener(keyManager);
-		// test = ImageLoader.loadImage("/textures/player.png");
-		// sheet = new SpriteSheet(test);
+		// Apply the 'init' function within the 'Assets' class
 		Assets.init();
 		
-	    // gameCamera = new GameCamera(this, 0, 0);
 		handler = new Handler(this);
 		
 		gameState = new GameState(handler);
-		menuState = new MenuState(handler);
+		// Set the current state of the application to the game 
 		State.setState(gameState);
 	}
 	
 	private void update()
 	{
 		keyManager.update();
-		
+		/* If there is no current state set for the application,
+		   then the current state will be retrieved (which should be 
+		   the 'gameState' instance of the 'GameState' object initialized in
+		   init) and updated */
 		if(State.getState() != null)
 		{
 			State.getState().update();
@@ -103,15 +113,15 @@ public class Game implements Runnable
 		   for the drawing buffer
 		 */
 		g = bs.getDrawGraphics();
-		// Function will clear a certain portion of the screen
+		// Function will clear the entirity of the screen
 		g.clearRect(0, 0, width, height);
 		
-		// g.drawImage(Assets.player, 5, 5, null);
 		if(State.getState() != null)
 		{
+			// Function will render the world of the game in 'GamState'
 			State.getState().render(g);
 		}
-		
+		// Show images to screen
 		bs.show();
 		g.dispose();
 	}
@@ -120,7 +130,8 @@ public class Game implements Runnable
 	{
 		init();
 		/* Is the amount of times the 'update' and 'render'
-		   functions should be called per second */
+		   functions will be called per second. fps
+		   stands for frame per second */
 		int fps = 60;
 		/* This is the maximum amount of time we have in 
 		   nanoseconds to execute 'update' and 'render' */
@@ -150,22 +161,20 @@ public class Game implements Runnable
 			{
 				update();
 				render();
+				/* 'delta' value will decrease so 'update' 
+				and 'render' can be called again */
 				delta--;
 			}
 		}
-		
+		// Will call method to stop the thread as it is no longer running
 		stop();
 	}
 	
+	// Getters - returns values of private methods
 	public KeyManager getKeyManager()
 	{
 		return keyManager;
 	}
-	
-	/* public GameCamera getGameCamera()
-	{
-		return gameCamera;
-	} */
 	
 	public int getWidth()
 	{
@@ -187,11 +196,12 @@ public class Game implements Runnable
 			return;
 		}
 		running = true;
-		/* Passing the "Game" class to the 
+		/* Passing the 'Game' object to the 
 		   thread will run the class on the 
 		   thread */
 		thread = new Thread(this);
-		// This function will call the "run" method
+		/* This function will call the 'run' method,
+		   the function for running the program/application */
 		thread.start();
 	}
 	
